@@ -1,0 +1,12 @@
+<h1>Articles</h1>
+<ul>
+{% for group in groups %}
+    <h2>Article cluster:</h2>
+    {% for item in group %}
+        <li><a href = "{{item.link}}">{{ item.title }}</a> - {{item.array_agg}}</li>
+        {% else %}
+        <li>This would display if the 'item' collection were empty</li>
+    {% endfor %}
+    <br>
+{% endfor %}
+</ul>
