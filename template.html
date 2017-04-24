@@ -1,12 +1,21 @@
 <h1>Articles</h1>
 <ul>
 {% for group in groups %}
-    <h2>Article cluster:</h2>
+<h2>Article cluster {{loop.index}}</h2>
+<h3>Top: <a class ="btn btn-primary" role="button" data-toggle="collapse" href="#additional{{loop.index}}" aria-expanded="false" aria-controls="additional{{loop.index}}">Expand</a></h3>
     {% for item in group %}
-        <li><a href = "{{item.link}}">{{ item.title }}</a> - {{item.array_agg}}</li>
-        {% else %}
-        <li>This would display if the 'item' collection were empty</li>
+    {% if item['source-rank'] == 0 and item['group-rank'] < group.cutoff %}
+    <li><a href = "{{item.link}}">{{ item.title }}</a> - {{item.timestamp}} - {{item.array_agg}}</li>
+      {% endif %}
+    {% endfor %}
+    <div class="collapse" id="additional{{loop.index}}">
+    <h3>Rest:</h3>
+    {% for item in group %}
+      {% if item['source-rank'] > 0 %}
+      <li><a href = "{{item.link}}">{{ item.title }}</a> - {{item.timestamp}} - {{item.array_agg}}</li>
+      {% endif %}
     {% endfor %}
     <br>
+      </div>
 {% endfor %}
 </ul>
