@@ -1,6 +1,7 @@
+{% import "entry.html" as entry %}
 {% for group in groups %}
 <div class = "row">
-  <h3>Article cluster {{loop.index}}</h3>
+  <h4>Article cluster {{loop.index}}</h4>
 </div>
 <div class="row">
   <div class="col-md-6">
@@ -11,8 +12,13 @@
   </div>
 </div>
     {% for item in group %}
-    {% if item['source-rank'] == 0 and item['group-rank'] < group.cutoff %}
-    <div class="row"><a href = "{{item.link}}">{{ item.title }}</a> - {{item.timestamp}} - {{item.array_agg}}</div>
+      {% if item['source-rank'] == 0 and item['group-rank'] == 0 %}
+        {{ entry.article_entry_em(item) }}
+      {% endif %}
+    {% endfor %}
+    {% for item in group %}
+      {% if item['source-rank'] == 0 and item['group-rank'] < group.cutoff and item['group-rank'] > 0 %}
+        {{ entry.article_entry(item) }}
       {% endif %}
     {% endfor %}
     <div class="collapse" id="additional{{loop.index}}">
@@ -20,11 +26,11 @@
         <b>Rest:</b>
       </div>
     {% for item in group %}
-    {% if item['source-rank'] > 0 or item['group-rank'] >= group.cutoff %}
-    <div class ="row"><a href = "{{item.link}}">{{ item.title }}</a> - {{item.timestamp}} - {{item.array_agg}}</div>
+      {% if item['source-rank'] > 0 or item['group-rank'] >= group.cutoff %}
+        {{ entry.article_entry(item) }}
       {% endif %}
     {% endfor %}
     <br>
-    </div>
+  </div>
 
 {% endfor %}

@@ -1,0 +1,18 @@
+{% macro article_entry(item) %}
+<div class="row">
+    <a href = "{{item.link}}">{{item.title}}</a>: <span class="text-muted">{{item.source_name}} - {{item.timestamp}}</span>
+</div>
+<div class="row">
+     {{item.array_agg}}
+</div>
+{% endmacro %}
+
+{% macro article_entry_em(item) %}
+<div class="row">
+    <a href = "{{item.link}}"><span class="h4">{{item.title}}</span></a>: <span class="text-muted">{{item.source_name}} - {{item.timestamp}}</span>
+</div>
+<div class="row"
+<div class="row">
+     {{item.array_agg}}
+</div>
+{% endmacro %}
