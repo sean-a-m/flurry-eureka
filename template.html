@@ -8,15 +8,16 @@
     <b>Top:</b>
   </div>
   <div class="col-md-6">
+    <a href = "https://confabulator.io/api/clustering/related?id={{group.id}}&page=10&perpage=0"><div class="text-right">[Search Related]</div></a>
     <a role="button" type="button" class="collapse-toggle" data-toggle="collapse" href="#additional{{loop.index}}" aria-expanded="false" aria-controls="additional{{loop.index}}" ><div class="text-right collapse-toggle">[Expand]</div></a>
   </div>
 </div>
-    {% for item in group %}
+    {% for item in group['articles'] %}
       {% if item['source-rank'] == 0 and item['group-rank'] == 0 %}
         {{ entry.article_entry_em(item) }}
       {% endif %}
     {% endfor %}
-    {% for item in group %}
+    {% for item in group['articles'] %}
       {% if item['source-rank'] == 0 and item['group-rank'] < group.cutoff and item['group-rank'] > 0 %}
         {{ entry.article_entry(item) }}
       {% endif %}
@@ -25,7 +26,7 @@
       <div class="row">
         <b>Rest:</b>
       </div>
-    {% for item in group %}
+    {% for item in group['articles'] %}
       {% if item['source-rank'] > 0 or item['group-rank'] >= group.cutoff %}
         {{ entry.article_entry(item) }}
       {% endif %}

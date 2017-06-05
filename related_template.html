@@ -1,0 +1,6 @@
+{% import "entry.html" as entry %}
+{% for article in articles %}
+<div class = "row">
+  {{ entry.article_entry_em(item) }}
+</div>
+{% endfor %}

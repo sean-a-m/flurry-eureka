@@ -1,16 +1,17 @@
 function parseDates ( articles ) {
-  articles.map(function(article) {
+  articles['articles'].map(function(article) {
     articleDate = new Date(article['date'] * 1000);
     article['timestamp'] = articleDate.toLocaleString();
   });
+  console.log(articles);
   return articles;
 }
 
 function sortArticles( articles ) {
-  articles.sort(function(i, j) {
+  articles['articles'].sort(function(i, j) {
     return i['group-rank'] - j['group-rank'];
   });
-  articles['cutoff'] = articles.length / 2;
+  articles['cutoff'] = articles['articles'].length / 2;
 
   return articles;
 }
@@ -28,6 +29,15 @@ function generateList( result ) {
 	$( "#articles" ).html( nunjucks.render('./template.html', {groups: result} ))
 };
 
+function generateRelatedList( result ) {
+  result = result.map(function(xs) {
+    sortArticles(xs);
+  });
+
+	$( "#articles" ).html( nunjucks.render('./related_template.html', {groups: result} ))
+};
+
+
 function loadArticles() {
 $.ajax({
 	url: "https://confabulator.io/api/clustering",
@@ -37,3 +47,18 @@ $.ajax({
 	}
 });
 };
+
+function loadRelated() {
+  var urlParams = new URLSearchParams(window.location.search);
+  var searchId = urlParams.get('id');
+  $.ajax({
+    url: "https://confabulator.io/api/clustering/related?id=" + searchId + "&page=10&perpage=0",
+    dataType: "json",
+    success: function( result ) {
+      generateRelatedList(result);
+    }
+  });
+};
+
+
+
