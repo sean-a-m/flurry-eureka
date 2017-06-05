@@ -30,17 +30,13 @@ function generateList( result ) {
 };
 
 function generateRelatedList( result ) {
-  result = result.map(function(xs) {
-    sortArticles(xs);
-  });
-
 	$( "#articles" ).html( nunjucks.render('./related_template.html', {groups: result} ))
 };
 
 
 function loadArticles() {
 $.ajax({
-	url: "https://confabulator.io/api/clustering",
+	url: "https://confabulator.io/api/clustering/",
 	dataType: "json",
 	success: function( result ) {
 		generateList(result);

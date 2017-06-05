@@ -1,6 +1,6 @@
 {% import "entry.html" as entry %}
-{% for article in articles %}
+{% for article in groups %}
 <div class = "row">
-  {{ entry.article_entry_em(item) }}
+  {{ entry.article_entry(article) }}
 </div>
 {% endfor %}
